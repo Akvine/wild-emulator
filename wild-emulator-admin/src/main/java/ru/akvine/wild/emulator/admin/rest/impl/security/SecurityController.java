@@ -1,4 +1,4 @@
-package ru.akvine.wild.emulator.admin.rest.impl;
+package ru.akvine.wild.emulator.admin.rest.impl.security;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.akvine.wild.emulator.admin.rest.dto.AuthRequest;
-import ru.akvine.wild.emulator.admin.rest.meta.SecurityControllerMeta;
+import ru.akvine.wild.emulator.admin.rest.meta.security.SecurityControllerMeta;
 import ru.akvine.wild.emulator.admin.utils.SecurityHelper;
 import ru.akvine.wild.emulator.common.dto.Response;
 import ru.akvine.wild.emulator.common.dto.SuccessfulResponse;

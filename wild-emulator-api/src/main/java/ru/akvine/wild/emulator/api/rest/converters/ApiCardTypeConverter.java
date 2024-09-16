@@ -8,7 +8,7 @@ import ru.akvine.wild.emulator.core.domain.CardTypeModel;
 import java.util.List;
 
 @Component
-public class CardTypeConverter {
+public class ApiCardTypeConverter {
     public CardTypeListResponse convertToCardTypeListResponse(List<CardTypeModel> cardTypeModels) {
         Preconditions.checkNotNull(cardTypeModels, "cardTypeModels is null");
         return new CardTypeListResponse().setData(cardTypeModels.stream().map(CardTypeModel::getType).toList());

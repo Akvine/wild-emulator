@@ -26,14 +26,12 @@ public class CardEntity {
     @Column(name = "EXTERNAL_TITLE", nullable = false)
     private String externalTitle;
 
-    @Column(name = "CATEGORY_ID", nullable = false)
-    private int categoryId;
-
-    @Column(name = "CATEGORY_TITLE", nullable = false)
-    private String categoryTitle;
-
     @Column(name = "BARCODE", nullable = false)
     private String barcode;
+
+    @ManyToOne
+    @JoinColumn(name = "CARD_CATEGORY_ID", nullable = false)
+    private CardCategoryEntity cardCategory;
 
     @ManyToOne
     @JoinColumn(name = "CARD_TYPE_ID", nullable = false)

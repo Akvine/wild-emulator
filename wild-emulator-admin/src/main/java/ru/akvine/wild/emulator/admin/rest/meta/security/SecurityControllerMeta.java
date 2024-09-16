@@ -1,4 +1,4 @@
-package ru.akvine.wild.emulator.admin.rest.meta;
+package ru.akvine.wild.emulator.admin.rest.meta.security;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;

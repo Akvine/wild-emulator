@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ru.akvine.wild.emulator.common.dto.Response;
 
 @RequestMapping(value = "/api/cards/types")
-public interface CardTypeControllerMeta {
+public interface ApiCardTypeControllerMeta {
     @GetMapping(value = "/content/v2/directory/kinds")
     Response list(@RequestHeader("Authorization") String token);
 }
