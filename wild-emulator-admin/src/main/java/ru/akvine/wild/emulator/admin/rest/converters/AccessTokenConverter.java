@@ -8,7 +8,7 @@ import ru.akvine.wild.emulator.admin.rest.dto.token.TokenGenerateResponse;
 import ru.akvine.wild.emulator.admin.utils.SecurityHelper;
 import ru.akvine.wild.emulator.common.utils.DateUtils;
 import ru.akvine.wild.emulator.core.domain.AccessTokenModel;
-import ru.akvine.wild.emulator.core.services.token.TokenGenerate;
+import ru.akvine.wild.emulator.core.services.dto.token.TokenGenerate;
 
 @Component
 @RequiredArgsConstructor

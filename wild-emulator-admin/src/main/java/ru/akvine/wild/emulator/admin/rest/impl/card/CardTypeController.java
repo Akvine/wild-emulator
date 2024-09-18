@@ -1,12 +1,12 @@
-package ru.akvine.wild.emulator.admin.rest.impl;
+package ru.akvine.wild.emulator.admin.rest.impl.card;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
-import ru.akvine.wild.emulator.admin.rest.converters.CardTypeConverter;
-import ru.akvine.wild.emulator.admin.rest.meta.CardTypeControllerMeta;
+import ru.akvine.wild.emulator.admin.rest.converters.card.CardTypeConverter;
+import ru.akvine.wild.emulator.admin.rest.meta.card.CardTypeControllerMeta;
 import ru.akvine.wild.emulator.common.dto.Response;
-import ru.akvine.wild.emulator.core.domain.CardTypeModel;
-import ru.akvine.wild.emulator.core.services.CardTypeService;
+import ru.akvine.wild.emulator.core.domain.card.CardTypeModel;
+import ru.akvine.wild.emulator.core.services.card.CardTypeService;
 
 import java.util.List;
 

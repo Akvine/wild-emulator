@@ -10,7 +10,7 @@ import ru.akvine.wild.emulator.admin.rest.meta.security.AccessTokenControllerMet
 import ru.akvine.wild.emulator.common.dto.Response;
 import ru.akvine.wild.emulator.core.domain.AccessTokenModel;
 import ru.akvine.wild.emulator.core.services.security.AccessTokenService;
-import ru.akvine.wild.emulator.core.services.token.TokenGenerate;
+import ru.akvine.wild.emulator.core.services.dto.token.TokenGenerate;
 
 @RestController
 @RequiredArgsConstructor

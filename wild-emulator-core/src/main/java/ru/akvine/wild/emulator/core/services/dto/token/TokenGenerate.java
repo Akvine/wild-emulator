@@ -1,4 +1,4 @@
-package ru.akvine.wild.emulator.core.services.token;
+package ru.akvine.wild.emulator.core.services.dto.token;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

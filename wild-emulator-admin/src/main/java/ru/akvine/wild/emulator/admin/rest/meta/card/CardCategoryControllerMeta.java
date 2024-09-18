@@ -1,4 +1,4 @@
-package ru.akvine.wild.emulator.admin.rest.meta;
+package ru.akvine.wild.emulator.admin.rest.meta.card;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

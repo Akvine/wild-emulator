@@ -7,8 +7,8 @@ import ru.akvine.wild.emulator.api.rest.converters.ApiCardTypeConverter;
 import ru.akvine.wild.emulator.api.rest.meta.ApiCardTypeControllerMeta;
 import ru.akvine.wild.emulator.api.services.ApiAuthenticationService;
 import ru.akvine.wild.emulator.common.dto.Response;
-import ru.akvine.wild.emulator.core.domain.CardTypeModel;
-import ru.akvine.wild.emulator.core.services.CardTypeService;
+import ru.akvine.wild.emulator.core.domain.card.CardTypeModel;
+import ru.akvine.wild.emulator.core.services.card.CardTypeService;
 
 import java.util.List;
 

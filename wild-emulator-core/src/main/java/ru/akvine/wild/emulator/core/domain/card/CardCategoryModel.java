@@ -1,4 +1,4 @@
-package ru.akvine.wild.emulator.core.domain;
+package ru.akvine.wild.emulator.core.domain.card;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

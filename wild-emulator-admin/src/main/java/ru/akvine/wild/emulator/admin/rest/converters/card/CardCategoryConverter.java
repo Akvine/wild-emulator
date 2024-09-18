@@ -1,10 +1,10 @@
-package ru.akvine.wild.emulator.admin.rest.converters;
+package ru.akvine.wild.emulator.admin.rest.converters.card;
 
 import com.google.common.base.Preconditions;
 import org.springframework.stereotype.Component;
 import ru.akvine.wild.emulator.admin.rest.dto.card.category.CardCategoryDto;
 import ru.akvine.wild.emulator.admin.rest.dto.card.category.CardCategoryListResponse;
-import ru.akvine.wild.emulator.core.domain.CardCategoryModel;
+import ru.akvine.wild.emulator.core.domain.card.CardCategoryModel;
 
 import java.util.List;
 

@@ -3,7 +3,7 @@ package ru.akvine.wild.emulator.api.rest.converters;
 import com.google.common.base.Preconditions;
 import org.springframework.stereotype.Component;
 import ru.akvine.wild.emulator.api.rest.dto.CardTypeListResponse;
-import ru.akvine.wild.emulator.core.domain.CardTypeModel;
+import ru.akvine.wild.emulator.core.domain.card.CardTypeModel;
 
 import java.util.List;
 

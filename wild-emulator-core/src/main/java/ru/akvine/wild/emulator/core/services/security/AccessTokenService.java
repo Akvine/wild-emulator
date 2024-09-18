@@ -11,7 +11,7 @@ import ru.akvine.wild.emulator.core.repositories.AccessTokenRepository;
 import ru.akvine.wild.emulator.core.repositories.entities.AccessTokenEntity;
 import ru.akvine.wild.emulator.core.repositories.entities.ClientEntity;
 import ru.akvine.wild.emulator.core.services.ClientService;
-import ru.akvine.wild.emulator.core.services.token.TokenGenerate;
+import ru.akvine.wild.emulator.core.services.dto.token.TokenGenerate;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
