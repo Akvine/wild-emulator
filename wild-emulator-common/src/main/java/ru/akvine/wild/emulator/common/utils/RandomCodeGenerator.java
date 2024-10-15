@@ -9,8 +9,8 @@ public class RandomCodeGenerator {
         return RandomStringUtils.randomAlphanumeric(length);
     }
 
-    public String generateNewRandomNumericCode(int length) {
-        return RandomStringUtils.randomNumeric(length);
+    public int generateNewRandomNumericCode(int length) {
+        return Integer.parseInt(RandomStringUtils.randomNumeric(length));
     }
 }
 

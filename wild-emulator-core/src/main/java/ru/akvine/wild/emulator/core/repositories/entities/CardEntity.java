@@ -19,7 +19,7 @@ public class CardEntity extends SoftBaseEntity {
     private Long id;
 
     @Column(name = "UUID", nullable = false)
-    private Integer uuid;
+    private int uuid;
 
     @Column(name = "NAME", nullable = false)
     private String name;

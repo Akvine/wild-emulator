@@ -6,4 +6,5 @@ public final class UUIDConstants {
     }
 
     public final static int CARD_UUID_LENGTH = 8;
+    public final static int ADVERT_UUID_LENGTH = 8;
 }

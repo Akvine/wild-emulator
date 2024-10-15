@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.akvine.wild.emulator.common.utils.RandomCodeGenerator;
 import ru.akvine.wild.emulator.core.constants.UUIDConstants;
 import ru.akvine.wild.emulator.core.domain.card.CardModel;
+import ru.akvine.wild.emulator.core.exceptions.CardNotFoundException;
 import ru.akvine.wild.emulator.core.repositories.CardRepository;
 import ru.akvine.wild.emulator.core.repositories.entities.CardCategoryEntity;
 import ru.akvine.wild.emulator.core.repositories.entities.CardEntity;
@@ -40,8 +41,7 @@ public class CardService {
         CardCategoryEntity cardCategory = cardCategoryService.verifyExistsByUuid(cardCreate.getCategoryUuid());
 
         CardEntity cardToSave = new CardEntity()
-                .setUuid(Integer.parseInt(
-                        RandomCodeGenerator.generateNewRandomNumericCode(UUIDConstants.CARD_UUID_LENGTH)))
+                .setUuid(RandomCodeGenerator.generateNewRandomNumericCode(UUIDConstants.CARD_UUID_LENGTH))
                 .setName(cardCreate.getName())
                 .setBarcode(cardCreate.getBarcode())
                 .setPrice(cardCreate.getPrice())
@@ -51,5 +51,11 @@ public class CardService {
                 .setClient(client);
 
         return new CardModel(cardRepository.save(cardToSave));
+    }
+
+    public CardEntity verifyExistsByUuid(int uuid) {
+        return cardRepository
+                .findByUuid(uuid)
+                .orElseThrow(() -> new CardNotFoundException("Card with uuid = [" + uuid + "] not found!"));
     }
 }
