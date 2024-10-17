@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class NextPage {
-    @Min(0)
+    @Min(1)
     private int page;
 
     @Min(0)

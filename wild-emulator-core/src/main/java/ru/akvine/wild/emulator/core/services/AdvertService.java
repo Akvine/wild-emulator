@@ -22,10 +22,7 @@ import ru.akvine.wild.emulator.core.repositories.entities.CardEntity;
 import ru.akvine.wild.emulator.core.repositories.entities.meta.AdvertBudgetSpendingEntity;
 import ru.akvine.wild.emulator.core.repositories.meta.AdvertBudgetSpendingRepository;
 import ru.akvine.wild.emulator.core.services.card.CardService;
-import ru.akvine.wild.emulator.core.services.dto.advert.AdvertCreate;
-import ru.akvine.wild.emulator.core.services.dto.advert.AdvertDeposit;
-import ru.akvine.wild.emulator.core.services.dto.advert.AdvertRename;
-import ru.akvine.wild.emulator.core.services.dto.advert.AdvertUpdate;
+import ru.akvine.wild.emulator.core.services.dto.advert.*;
 import ru.akvine.wild.emulator.core.strategy.budget.SpendingBudgetStrategy;
 
 import java.util.Date;
@@ -40,13 +37,14 @@ public class AdvertService {
     private final SpendingBudgetFactoryProvider spendingBudgetFactoryProvider;
     private final AdvertBudgetStrategyService advertBudgetStrategyService;
 
-    public List<AdvertModel> list(int page, int count) {
+    public List<AdvertModel> list(AdvertList advertList) {
+        Preconditions.checkNotNull(advertList, "advertList is null");
         PageRequest pageable = PageRequest.of(
-                page,
-                count
+                advertList.getCount(),
+                advertList.getPages()
         );
         return advertRepository
-                .list(pageable)
+                .list(advertList.getClientId(), pageable)
                 .stream()
                 .map(AdvertModel::new)
                 .toList();

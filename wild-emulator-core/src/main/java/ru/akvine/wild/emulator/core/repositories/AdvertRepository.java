@@ -11,12 +11,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AdvertRepository extends JpaRepository<AdvertEntity, Long> {
-    @Query("from AdvertEntity where ae.status = :status and ae.deleted = false")
+    @Query("from AdvertEntity ae where ae.status = :status and ae.deleted = false")
     List<AdvertEntity> findByStatus(@Param("status") int status);
 
-    @Query("from AdvertEntity where ae.uuid = :uuid and ae.deleted = false")
+    @Query("from AdvertEntity ae where ae.uuid = :uuid and ae.deleted = false")
     Optional<AdvertEntity> findByUuid(@Param("uuid") int uuid);
 
-    @Query("from AdvertEntity where ae.deleted = false")
-    List<AdvertEntity> list(@NotNull Pageable pageable);
+    @Query("from AdvertEntity ae join card aec join client aecc where aecc.deleted = false and aecc.id = :clientId")
+    List<AdvertEntity> list(@Param("clientId") long clientId,
+                            @NotNull Pageable pageable);
 }

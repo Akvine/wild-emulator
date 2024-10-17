@@ -47,12 +47,12 @@ public class AdvertEntity extends SoftBaseEntity {
     @Column(name = "BUDGET_SUM", nullable = false)
     private int budgetSum;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ADVERT_BUDGET_SPENDING_ID", nullable = false)
     @NotNull
     private AdvertBudgetSpendingEntity advertBudgetSpending;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CARD_ID", nullable = false)
     @NotNull
     private CardEntity card;

@@ -7,11 +7,13 @@ import ru.akvine.wild.emulator.admin.rest.dto.advert.AdvertCreateRequest;
 import ru.akvine.wild.emulator.admin.rest.dto.advert.AdvertUpdateRequest;
 import ru.akvine.wild.emulator.admin.rest.meta.advert.AdvertControllerMeta;
 import ru.akvine.wild.emulator.admin.rest.validators.AdvertValidator;
+import ru.akvine.wild.emulator.admin.utils.SecurityHelper;
 import ru.akvine.wild.emulator.common.dto.NextPage;
 import ru.akvine.wild.emulator.common.dto.Response;
 import ru.akvine.wild.emulator.core.domain.AdvertModel;
 import ru.akvine.wild.emulator.core.services.AdvertService;
 import ru.akvine.wild.emulator.core.services.dto.advert.AdvertCreate;
+import ru.akvine.wild.emulator.core.services.dto.advert.AdvertList;
 
 import java.util.List;
 
@@ -22,9 +24,11 @@ public class AdvertController implements AdvertControllerMeta {
     private final AdvertService advertService;
     private final AdvertValidator advertValidator;
 
+
     @Override
     public Response list(NextPage nextPage) {
-        List<AdvertModel> adverts = advertService.list(nextPage.getPage(), nextPage.getCount());
+        AdvertList advertList = advertConverter.convertToAdvertList(nextPage);
+        List<AdvertModel> adverts = advertService.list(advertList);
         return advertConverter.convertToConvertAdvertListResponse(adverts);
     }
 

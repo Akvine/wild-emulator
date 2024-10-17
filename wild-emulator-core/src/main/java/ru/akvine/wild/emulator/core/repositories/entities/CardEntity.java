@@ -1,6 +1,7 @@
 package ru.akvine.wild.emulator.core.repositories.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -16,15 +17,18 @@ public class CardEntity extends SoftBaseEntity {
     @Column(name = "ID", updatable = false, nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cardEntitySeq")
     @SequenceGenerator(name = "cardEntitySeq", sequenceName = "SEQ_CARD_ENTITY", allocationSize = 1000)
+    @NotNull
     private Long id;
 
     @Column(name = "UUID", nullable = false)
     private int uuid;
 
     @Column(name = "NAME", nullable = false)
+    @NotNull
     private String name;
 
     @Column(name = "BARCODE", nullable = false)
+    @NotNull
     private String barcode;
 
     @Column(name = "PRICE", nullable = false)
@@ -33,16 +37,19 @@ public class CardEntity extends SoftBaseEntity {
     @Column(name = "DISCOUNT", nullable = false)
     private int discount;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CARD_CATEGORY_ID", nullable = false)
+    @NotNull
     private CardCategoryEntity cardCategory;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CARD_TYPE_ID", nullable = false)
+    @NotNull
     private CardTypeEntity cardType;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CLIENT_ID", nullable = false)
+    @NotNull
     private ClientEntity client;
 
     @Transient

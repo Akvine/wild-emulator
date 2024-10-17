@@ -141,7 +141,7 @@ INSERT INTO CARD_TYPE_ENTITY (ID, TYPE, CREATED_DATE) VALUES (3, 'Детский
 INSERT INTO CARD_TYPE_ENTITY (ID, TYPE, CREATED_DATE) VALUES (4, 'Девочки', '2024-09-16 00:00');
 INSERT INTO CARD_TYPE_ENTITY (ID, TYPE, CREATED_DATE) VALUES (5, 'Мальчики', '2024-09-16 00:00');
 
---changeset akvine:TG-BOT-1-11
+--changeset akvine:WILD-EMU-1-11
 --preconditions onFail:MARK_RAN onError:HALT onUpdateSQL:FAIL
 --precondition-sql-check expectedResult:0 select count(*) from information_schema.tables where upper(table_name) = 'CARD_CATEGORY_ENTITY' and table_schema = 'public';
 CREATE TABLE CARD_CATEGORY_ENTITY
@@ -157,7 +157,7 @@ CREATE SEQUENCE SEQ_CARD_CATEGORY_ENTITY START WITH 1 INCREMENT BY 1000;
 CREATE UNIQUE INDEX CARD_CATEGORY_ID_INDEX ON CARD_CATEGORY_ENTITY (ID);
 CREATE UNIQUE INDEX CARD_CATEGORY_UUID_INDEX ON CARD_CATEGORY_ENTITY (UUID);
 
---changeset akvine:TG-BOT-1-12
+--changeset akvine:WILD-EMU-1-12
 --preconditions onFail:MARK_RAN onError:HALT onUpdateSQL:FAIL
 --precondition-sql-check expectedResult:0 select count(*) from CARD_CATEGORY_ENTITY;
 INSERT INTO CARD_CATEGORY_ENTITY (ID, UUID, NAME, CREATED_DATE) VALUES (1, 2560, '3D очки', '2024-09-17 00:00');
@@ -168,7 +168,7 @@ INSERT INTO CARD_CATEGORY_ENTITY (ID, UUID, NAME, CREATED_DATE) VALUES (5, 4034,
 INSERT INTO CARD_CATEGORY_ENTITY (ID, UUID, NAME, CREATED_DATE) VALUES (6, 1928, 'BB-кремы', '2024-09-17 00:00');
 INSERT INTO CARD_CATEGORY_ENTITY (ID, UUID, NAME, CREATED_DATE) VALUES (7, 4035, 'Blu-Ray проигрыватели', '2024-09-17 00:00');
 
---changeset akvine:TG-BOT-1-13
+--changeset akvine:WILD-EMU-1-13
 --preconditions onFail:MARK_RAN onError:HALT onUpdateSQL:FAIL
 --precondition-sql-check expectedResult:0 select count(*) from information_schema.tables where upper(table_name) = 'CARD_ENTITY' and table_schema = 'public';
 CREATE TABLE CARD_ENTITY
@@ -197,3 +197,76 @@ CREATE UNIQUE INDEX CARD_UUID_INDEX ON CARD_ENTITY (UUID);
 CREATE UNIQUE INDEX CARD_CLIENT_INDEX ON CARD_ENTITY (CLIENT_ID);
 CREATE INDEX CARD_TYPE_ENTITY_ID_INDEX ON CARD_ENTITY (CARD_TYPE_ID);
 CREATE INDEX CARD_CATEGORY_ENTITY_ID_INDEX ON CARD_ENTITY (CARD_CATEGORY_ID);
+
+--changeset akvine:WILD-EMU-1-14
+--preconditions onFail:MARK_RAN onError:HALT onUpdateSQL:FAIL
+--precondition-sql-check expectedResult:0 select count(*) from information_schema.tables where upper(table_name) = 'ADVERT_BUDGET_SPENDING_ENTITY' and table_schema = 'public';
+CREATE TABLE ADVERT_BUDGET_SPENDING_ENTITY
+(
+    ID                          BIGINT        NOT NULL,
+    VALUE                       INTEGER       NOT NULL,
+    DELAY_SECONDS               BIGINT        NOT NULL,
+    TYPE                        VARCHAR(64)   NOT NULL,
+    CREATED_DATE                TIMESTAMP    NOT NULL,
+    UPDATED_DATE                TIMESTAMP,
+    CONSTRAINT ADVERT_BUDGET_SPENDING_PKEY PRIMARY KEY (ID)
+);
+CREATE SEQUENCE SEQ_ADVERT_BUDGET_SPENDING_ENTITY START WITH 1 INCREMENT BY 1000;
+CREATE UNIQUE INDEX ADVERT_BUDGET_SPENDING_ENTITY_ID_INDEX ON ADVERT_BUDGET_SPENDING_ENTITY (ID);
+
+--changeset akvine:WILD-EMU-1-15
+--preconditions onFail:MARK_RAN onError:HALT onUpdateSQL:FAIL
+--precondition-sql-check expectedResult:0 select count(*) from information_schema.tables where upper(table_name) = 'ADVERT_ENTITY' and table_schema = 'public';
+CREATE TABLE ADVERT_ENTITY
+(
+    ID                          BIGINT        NOT NULL,
+    UUID                        INTEGER       NOT NULL,
+    NAME                        VARCHAR(255)  NOT NULL,
+    CHANGE_TIME                 TIMESTAMP     NOT NULL,
+    STATUS                      INTEGER       NOT NULL,
+    TYPE                        INTEGER       NOT NULL,
+    CPM                         INTEGER       NOT NULL,
+    BUDGET_SUM                  INTEGER       NOT NULL,
+    ADVERT_BUDGET_SPENDING_ID   BIGINT        NOT NULL,
+    CARD_ID                     BIGINT        NOT NULL,
+    CREATED_DATE                TIMESTAMP    NOT NULL,
+    UPDATED_DATE                TIMESTAMP,
+    IS_DELETED                  BOOLEAN      NOT NULL,
+    DELETED_DATE                TIMESTAMP,
+    CONSTRAINT ADVERT_PKEY PRIMARY KEY (ID),
+    CONSTRAINT ADVERT_BUDGET_SPENDING_FKEY FOREIGN KEY (ADVERT_BUDGET_SPENDING_ID) REFERENCES ADVERT_BUDGET_SPENDING_ENTITY (ID),
+    CONSTRAINT CARD_ENTITY_FKEY FOREIGN KEY (CARD_ID) REFERENCES CARD_ENTITY (ID)
+);
+CREATE SEQUENCE SEQ_ADVERT_ENTITY START WITH 1 INCREMENT BY 1000;
+CREATE UNIQUE INDEX ADVERT_ID_INDEX ON ADVERT_ENTITY (ID);
+CREATE UNIQUE INDEX ADVERT_UUID_INDEX ON ADVERT_ENTITY (UUID);
+CREATE UNIQUE INDEX ADVERT_BUDGET_SPENDING_INDEX ON ADVERT_ENTITY (ADVERT_BUDGET_SPENDING_ID);
+CREATE UNIQUE INDEX ADVERT_CARD_INDEX ON ADVERT_ENTITY (CARD_ID);
+
+--changeset akvine:WILD-EMU-1-16
+--preconditions onFail:MARK_RAN onError:HALT onUpdateSQL:FAIL
+--precondition-sql-check expectedResult:0 select count(*) from information_schema.tables where upper(table_name) = 'ADVERT_STATISTIC_ENTITY' and table_schema = 'public';
+CREATE TABLE ADVERT_STATISTIC_ENTITY
+(
+    ID                      BIGINT       NOT NULL,
+    VIEWS                   INTEGER,
+    CLICKS                  INTEGER,
+    CTR                     FLOAT,
+    CPC                     FLOAT,
+    SUM                     INTEGER,
+    ATBS                    INTEGER,
+    ORDERS                  INTEGER,
+    CR                      INTEGER,
+    SHKS                    INTEGER,
+    SUM_PRICE               INTEGER,
+    ADVERT_ID               BIGINT       NOT NULL,
+    CREATED_DATE            TIMESTAMP    NOT NULL,
+    UPDATED_DATE            TIMESTAMP,
+    IS_DELETED              BOOLEAN      NOT NULL,
+    DELETED_DATE            TIMESTAMP,
+    CONSTRAINT ADVERT_STATISTIC_PKEY PRIMARY KEY (id),
+    CONSTRAINT ADVERT_STATISTIC_ADVERT_FKEY FOREIGN KEY (ADVERT_ID) REFERENCES ADVERT_ENTITY (ID)
+);
+CREATE SEQUENCE SEQ_ADVERT_STATISTIC_ENTITY START WITH 1 INCREMENT BY 1000;
+CREATE UNIQUE INDEX ADVERT_STATISTIC_ID_INDEX ON ADVERT_STATISTIC_ENTITY (ID);
+CREATE INDEX ADVERT_STATISTIC_ADVERT_INDEX ON ADVERT_STATISTIC_ENTITY (ADVERT_ID);

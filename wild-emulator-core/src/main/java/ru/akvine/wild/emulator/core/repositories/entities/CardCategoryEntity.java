@@ -1,6 +1,7 @@
 package ru.akvine.wild.emulator.core.repositories.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -16,11 +17,13 @@ public class CardCategoryEntity extends BaseEntity {
     @Column(name = "ID", updatable = false, nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cardCategoryEntitySeq")
     @SequenceGenerator(name = "cardCategoryEntitySeq", sequenceName = "SEQ_CARD_CATEGORY_ENTITY", allocationSize = 1000)
+    @NotNull
     private Long id;
 
     @Column(name = "UUID", nullable = false)
-    private Integer uuid;
+    private int uuid;
 
     @Column(name = "NAME", nullable = false)
+    @NotNull
     private String name;
 }

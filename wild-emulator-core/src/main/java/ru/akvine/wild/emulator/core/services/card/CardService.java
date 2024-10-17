@@ -25,9 +25,9 @@ public class CardService {
     private final CardTypeService cardTypeService;
     private final ClientService clientService;
 
-    public List<CardModel> list() {
+    public List<CardModel> list(long clientId) {
         return cardRepository
-                .findAll()
+                .findAll(clientId)
                 .stream()
                 .map(CardModel::new)
                 .toList();
