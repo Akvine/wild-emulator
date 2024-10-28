@@ -7,7 +7,6 @@ import ru.akvine.wild.emulator.admin.rest.dto.advert.AdvertCreateRequest;
 import ru.akvine.wild.emulator.admin.rest.dto.advert.AdvertUpdateRequest;
 import ru.akvine.wild.emulator.admin.rest.meta.advert.AdvertControllerMeta;
 import ru.akvine.wild.emulator.admin.rest.validators.AdvertValidator;
-import ru.akvine.wild.emulator.admin.utils.SecurityHelper;
 import ru.akvine.wild.emulator.common.dto.NextPage;
 import ru.akvine.wild.emulator.common.dto.Response;
 import ru.akvine.wild.emulator.core.domain.AdvertModel;

@@ -2,6 +2,7 @@ package ru.akvine.wild.emulator.core.services.card;
 
 import com.google.common.base.Preconditions;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import ru.akvine.wild.emulator.common.utils.RandomCodeGenerator;
 import ru.akvine.wild.emulator.core.constants.UUIDConstants;
@@ -13,7 +14,7 @@ import ru.akvine.wild.emulator.core.repositories.entities.CardEntity;
 import ru.akvine.wild.emulator.core.repositories.entities.CardTypeEntity;
 import ru.akvine.wild.emulator.core.repositories.entities.ClientEntity;
 import ru.akvine.wild.emulator.core.services.ClientService;
-import ru.akvine.wild.emulator.core.services.dto.card.CardCreate;
+import ru.akvine.wild.emulator.core.services.dto.card.*;
 
 import java.util.List;
 
@@ -53,9 +54,70 @@ public class CardService {
         return new CardModel(cardRepository.save(cardToSave));
     }
 
-    public CardEntity verifyExistsByUuid(int uuid) {
+    public CardModel update(CardUpdate cardUpdate) {
+        Preconditions.checkNotNull(cardUpdate, "cardUpdate is null");
+
+        CardEntity cardToUpdate = verifyExistsByUuid(cardUpdate.getUuid(), cardUpdate.getClientId());
+        if (StringUtils.isNotBlank(cardUpdate.getName()) &&
+                !cardToUpdate.getName().equals(cardUpdate.getName())) {
+            cardToUpdate.setName(cardUpdate.getName());
+        }
+        if (StringUtils.isNotBlank(cardUpdate.getBarcode()) &&
+                !cardToUpdate.getBarcode().equals(cardUpdate.getBarcode())) {
+            cardToUpdate.setBarcode(cardUpdate.getBarcode());
+        }
+        if (cardUpdate.getDiscount() != null &&
+                cardToUpdate.getDiscount() != cardUpdate.getDiscount()) {
+            cardToUpdate.setDiscount(cardUpdate.getDiscount());
+        }
+        if (cardUpdate.getPrice() != null &&
+                cardToUpdate.getPrice() != cardUpdate.getPrice()) {
+            cardToUpdate.setPrice(cardUpdate.getPrice());
+        }
+
+        return new CardModel(cardRepository.save(cardToUpdate));
+    }
+
+    public CardModel getByUuid(int uuid, long clientId) {
+        return new CardModel(verifyExistsByUuid(uuid, clientId));
+    }
+
+    public CardEntity verifyExistsByUuid(int uuid, long clientId) {
         return cardRepository
-                .findByUuid(uuid)
+                .findByUuid(uuid, clientId)
                 .orElseThrow(() -> new CardNotFoundException("Card with uuid = [" + uuid + "] not found!"));
+    }
+
+    public CardModel changePriceAndDiscount(CardChangePriceAndDiscount changePriceAndDiscount) {
+        Preconditions.checkNotNull(changePriceAndDiscount, "changePriceAndDiscount is null");
+        CardChangePrice changePrice = new CardChangePrice()
+                .setUuid(changePriceAndDiscount.getUuid())
+                .setClientId(changePriceAndDiscount.getClientId())
+                .setPrice(changePriceAndDiscount.getPrice());
+        changePrice(changePrice);
+
+        CardChangeDiscount changeDiscount = new CardChangeDiscount()
+                .setUuid(changePrice.getUuid())
+                .setClientId(changePrice.getClientId())
+                .setDiscount(changePriceAndDiscount.getDiscount());
+        return changeDiscount(changeDiscount);
+    }
+
+    public CardModel changePrice(CardChangePrice changePrice) {
+        Preconditions.checkNotNull(changePrice, "changePrice is null");
+        CardUpdate cardUpdate = new CardUpdate()
+                .setUuid(changePrice.getUuid())
+                .setClientId(changePrice.getClientId())
+                .setPrice(changePrice.getPrice());
+        return update(cardUpdate);
+    }
+
+    public CardModel changeDiscount(CardChangeDiscount changeDiscount) {
+        Preconditions.checkNotNull(changeDiscount, "changeDiscount is null");
+        CardUpdate cardUpdate = new CardUpdate()
+                .setUuid(changeDiscount.getUuid())
+                .setClientId(changeDiscount.getClientId())
+                .setDiscount(changeDiscount.getDiscount());
+        return update(cardUpdate);
     }
 }

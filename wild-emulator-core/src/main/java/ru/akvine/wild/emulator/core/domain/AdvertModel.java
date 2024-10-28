@@ -7,12 +7,15 @@ import ru.akvine.wild.emulator.core.domain.card.CardModel;
 import ru.akvine.wild.emulator.core.domain.meta.AdvertBudgetSpendingModel;
 import ru.akvine.wild.emulator.core.repositories.entities.AdvertEntity;
 
+import java.util.Date;
+
 @Data
 @Accessors(chain = true)
 public class AdvertModel extends SoftModel {
     private Long id;
     private int uuid;
     private String name;
+    private Date changeTime;
     private int currentBudget;
     private int cpm;
     private int status;
@@ -24,6 +27,7 @@ public class AdvertModel extends SoftModel {
         this.id = advert.getId();
         this.uuid = advert.getUuid();
         this.name = advert.getName();
+        this.changeTime = advert.getChangeTime();
         this.currentBudget = advert.getBudgetSum();
         this.cpm = advert.getCpm();
         this.status = advert.getStatus();

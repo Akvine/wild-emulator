@@ -1,0 +1,11 @@
+package ru.akvine.wild.emulator.api.rest.dto.card.good;
+
+import lombok.Data;
+import lombok.experimental.Accessors;
+import ru.akvine.wild.emulator.common.dto.SuccessfulResponse;
+
+@Data
+@Accessors(chain = true)
+public class ApiGetGoodResponse extends SuccessfulResponse {
+    private ApiGoodsData data;
+}

@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class AdvertCreate {
     private int cardUuid;
+    private long clientId;
     private String name;
     private int cpm;
     private int budgetSum;

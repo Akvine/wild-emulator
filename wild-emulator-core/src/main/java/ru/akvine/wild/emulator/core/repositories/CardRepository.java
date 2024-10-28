@@ -15,8 +15,16 @@ public interface CardRepository extends JpaRepository<CardEntity, Long> {
     @Deprecated
     List<CardEntity> findAll();
 
-    @Query("from CardEntity ce where ce.uuid = :uuid and ce.deleted = false")
-    Optional<CardEntity> findByUuid(@Param("uuid") int uuid);
+    @Query("from CardEntity ce join ce.client cec where " +
+            "ce.uuid = :uuid " +
+            "and " +
+            "ce.deleted = false " +
+            "and " +
+            "cec.id = :clientId " +
+            "and " +
+            "cec.deleted = false")
+    Optional<CardEntity> findByUuid(@Param("uuid") int uuid,
+                                    @Param("clientId") long clientId);
 
     @Query("from CardEntity ce join ce.client cec where cec.deleted = false and cec.id = :id")
     List<CardEntity> findAll(@Param("id") long clientId);

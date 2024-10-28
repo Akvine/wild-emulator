@@ -12,11 +12,13 @@ import ru.akvine.wild.emulator.api.rest.meta.ApiAdvertsControllerMeta;
 import ru.akvine.wild.emulator.api.services.ApiAuthenticationService;
 import ru.akvine.wild.emulator.common.dto.Response;
 import ru.akvine.wild.emulator.common.dto.SuccessfulResponse;
+import ru.akvine.wild.emulator.core.domain.AccessTokenModel;
 import ru.akvine.wild.emulator.core.domain.AdvertModel;
 import ru.akvine.wild.emulator.core.services.AdvertService;
-import ru.akvine.wild.emulator.core.services.dto.advert.AdvertDeposit;
-import ru.akvine.wild.emulator.core.services.dto.advert.AdvertRename;
-import ru.akvine.wild.emulator.core.services.dto.advert.AdvertUpdate;
+import ru.akvine.wild.emulator.core.services.dto.advert.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -77,5 +79,21 @@ public class ApiAdvertsController implements ApiAdvertsControllerMeta {
         AdvertDeposit advertDeposit = advertConverter.convertToAdvertDeposit(uuid, request);
         AdvertModel advertModel = advertService.deposit(advertDeposit);
         return advertConverter.convertToAdvertDepositResponse(advertModel);
+    }
+
+    @Override
+    public Response count(@RequestHeader("Authorization") String token) {
+        AccessTokenModel accessToken = apiAuthenticationService.checkToken(token);
+        Map<Integer, Map<Integer, GroupedAdverts>> groupedAdverts = advertService.listAndGroupBy(accessToken.getClient().getId());
+        return null;
+    }
+
+    @Override
+    public Response list(@RequestHeader("Authorization") String token,
+                         List<Integer> advertIds) {
+        AccessTokenModel accessToken = apiAuthenticationService.checkToken(token);
+        AdvertListByIds advertListByIds = advertConverter.convertToAdvertListByIds(accessToken, advertIds);
+        List<AdvertModel> adverts = advertService.list(advertListByIds);
+        return advertConverter.convertToAdvertListResponse(adverts);
     }
 }

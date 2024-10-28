@@ -1,6 +1,7 @@
 package ru.akvine.wild.emulator.core.services;
 
 import com.google.common.base.Preconditions;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.PageRequest;
@@ -27,6 +28,8 @@ import ru.akvine.wild.emulator.core.strategy.budget.SpendingBudgetStrategy;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -50,10 +53,39 @@ public class AdvertService {
                 .toList();
     }
 
+    public List<AdvertModel> list(AdvertListByIds advertListByIds) {
+        Preconditions.checkNotNull(advertListByIds, "advertListByIds");
+        return advertRepository
+                .list(advertListByIds.getClientId(),
+                        advertListByIds.getIds())
+                .stream()
+                .map(AdvertModel::new)
+                .toList();
+    }
+
+    public Map<Integer, Map<Integer, GroupedAdverts>> listAndGroupBy(long clientId) {
+        List<AdvertModel> adverts = advertRepository
+                .list(clientId)
+                .stream()
+                .map(AdvertModel::new)
+                .toList();
+        return adverts.stream()
+                .collect(Collectors.groupingBy(
+                        AdvertModel::getStatus,
+                        Collectors.groupingBy(
+                                AdvertModel::getType,
+                                Collectors.collectingAndThen(
+                                        Collectors.toList(),
+                                        (List<AdvertModel> advertList) -> new GroupedAdverts(advertList.size(), advertList) // Передаем список с типом Advert
+                                )
+                        )
+                ));
+    }
+
     public AdvertModel create(AdvertCreate advertCreate) {
         Preconditions.checkNotNull(advertCreate, "advertCreate is null");
 
-        CardEntity card = cardService.verifyExistsByUuid(advertCreate.getCardUuid());
+        CardEntity card = cardService.verifyExistsByUuid(advertCreate.getCardUuid(), advertCreate.getClientId());
         AdvertBudgetSpendingEntity advertBudgetSpendingToSave = new AdvertBudgetSpendingEntity()
                 .setValue(advertCreate.getAdvertBudgetSpendingCreate().getValue())
                 .setDelaySeconds(advertCreate.getAdvertBudgetSpendingCreate().getDelaySeconds())

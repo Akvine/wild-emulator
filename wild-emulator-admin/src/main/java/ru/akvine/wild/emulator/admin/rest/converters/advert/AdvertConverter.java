@@ -31,6 +31,7 @@ public class AdvertConverter {
     public AdvertCreate convertToAdvertCreate(AdvertCreateRequest advertCreateRequest) {
         return new AdvertCreate()
                 .setCardUuid(advertCreateRequest.getCardUuid())
+                .setClientId(securityHelper.getCurrentUser().getId())
                 .setName(advertCreateRequest.getName())
                 .setCpm(advertCreateRequest.getCpm())
                 .setBudgetSum(advertCreateRequest.getBudget())

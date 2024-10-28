@@ -7,6 +7,8 @@ import ru.akvine.wild.emulator.api.rest.dto.adverts.AdvertDepositRequest;
 import ru.akvine.wild.emulator.api.rest.dto.adverts.AdvertRenameRequest;
 import ru.akvine.wild.emulator.common.dto.Response;
 
+import java.util.List;
+
 @RequestMapping(value = "/api/adverts")
 public interface ApiAdvertsControllerMeta {
     @GetMapping(value = "/adv/v1/budget")
@@ -33,4 +35,11 @@ public interface ApiAdvertsControllerMeta {
     Response deposit(@RequestParam("id") int uuid,
                      @Valid @RequestBody AdvertDepositRequest request,
                      @RequestHeader("Authorization") String token);
+
+    @GetMapping(value = "/adv/v1/promotion/count")
+    Response count(@RequestHeader("Authorization") String token);
+
+    @PostMapping(value = "/adv/v1/promotion/adverts")
+    Response list(@RequestHeader("Authorization") String token,
+                  List<Integer> advertIds);
 }

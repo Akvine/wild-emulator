@@ -8,7 +8,9 @@ import ru.akvine.wild.emulator.core.domain.AdvertStatisticModel;
 import ru.akvine.wild.emulator.core.repositories.AdvertStatisticRepository;
 import ru.akvine.wild.emulator.core.repositories.entities.AdvertEntity;
 import ru.akvine.wild.emulator.core.repositories.entities.AdvertStatisticEntity;
+import ru.akvine.wild.emulator.core.services.dto.advert.statistic.AdvertStatisticListByDates;
 
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -37,5 +39,16 @@ public class AdvertStatisticService {
                 .setAdvertEntity(advertEntity);
 
         return new AdvertStatisticModel(advertStatisticRepository.save(advertStatisticToSave));
+    }
+
+    public List<AdvertStatisticModel> list(AdvertStatisticListByDates listByDates) {
+        Preconditions.checkNotNull(listByDates, "advertStatisticListByDates is null");
+        return advertStatisticRepository
+                .listByDates(
+                        listByDates.getClientId(),
+                        listByDates.getDates())
+                .stream()
+                .map(AdvertStatisticModel::new)
+                .toList();
     }
 }
